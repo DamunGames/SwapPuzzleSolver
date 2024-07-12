@@ -4,13 +4,13 @@ using UnityEngine;
 
 public abstract class GUIWindowBase : IGUIWindow
 {
-	// •\Ž¦ŠÇ—î•ñ
+	// è¡¨ç¤ºç®¡ç†æƒ…å ±
 	protected bool isOpened;
 	protected Rect screenRect;
 
 	protected GUIWindowBase() => screenRect = InitialScreenRect;
 
-	// ƒCƒ“ƒ^[ƒtƒF[ƒX‚ÌŽÀ‘•
+	// ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®å®Ÿè£…
 	public string WindowTitle => WindowId.ToString();
 	public virtual void Open() => isOpened = true;
 	public virtual void Close() => isOpened = false;
@@ -21,7 +21,7 @@ public abstract class GUIWindowBase : IGUIWindow
 		}
 	}
 
-	// ’ŠÛƒvƒƒpƒeƒBAƒƒ\ƒbƒh
+	// æŠ½è±¡ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã€ãƒ¡ã‚½ãƒƒãƒ‰
 	protected abstract Define.WindowIdType WindowId { get; }
 	protected abstract Rect InitialScreenRect { get; }
 	protected abstract void WindowFunction(int windowId);

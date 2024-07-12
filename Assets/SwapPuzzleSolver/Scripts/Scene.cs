@@ -5,7 +5,7 @@ using UnityEngine;
 public class Scene : MonoBehaviour
 {
 	GameData gameData = new GameData();
-	
+
 	List<IGUIWindow> openableWindows = new List<IGUIWindow>();
 	List<IGUIWindow> guiWindows = new List<IGUIWindow>();
 
@@ -22,14 +22,14 @@ public class Scene : MonoBehaviour
 
 	void OnGUI()
 	{
-		// GUIWindow表示ボタン
+		// GUIWindow陦ｨ遉ｺ繝懊ち繝ｳ
 		foreach (var guiWindow in openableWindows) {
 			if (GUILayout.Button(guiWindow.WindowTitle)) {
 				guiWindow.Open();
 			}
 		}
 
-		// GUIWindowの表示処理
+		// GUIWindow縺ｮ陦ｨ遉ｺ蜃ｦ逅�
 		foreach (var guiWindow in guiWindows) {
 			guiWindow.OnGUI();
 		}

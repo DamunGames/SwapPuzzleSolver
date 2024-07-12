@@ -10,11 +10,11 @@ public class FileGUIWindow : GUIWindowBase
 	protected override void WindowFunction(int windowId)
 	{
 		if (GUILayout.Button("Load")) {
-			// TODO:ŽÀ‘•
+			// TODO:å®Ÿè£…
 		}
 
 		if (GUILayout.Button("Save")) {
-			// TODO:ŽÀ‘•
+			// TODO:å®Ÿè£…
 		}
 
 		if (GUILayout.Button("Close")) {

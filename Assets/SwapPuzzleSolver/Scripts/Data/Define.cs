@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ’è”’è‹`
+// å®šæ•°å®šç¾©
 public static class Define
 {
 	// GUIWindow
