@@ -11,8 +11,10 @@ public class Scene : MonoBehaviour
 
 	void Start()
 	{
-		gameData.FileGUIWindow = new FileGUIWindow();
-		RegisterWindow(gameData.FileGUIWindow);
+		gameData.Load();
+
+		gameData.BoardDataGUIWindow = new BoardDataGUIWindow(gameData);
+		RegisterWindow(gameData.BoardDataGUIWindow);
 	}
 
 	void Update()

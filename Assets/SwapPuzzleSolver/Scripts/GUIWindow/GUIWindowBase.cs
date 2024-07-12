@@ -8,7 +8,14 @@ public abstract class GUIWindowBase : IGUIWindow
 	protected bool isOpened;
 	protected Rect screenRect;
 
-	protected GUIWindowBase() => screenRect = InitialScreenRect;
+	// 挙動実装用情報
+	protected GameData gameData;
+
+	protected GUIWindowBase(GameData gameData)
+	{
+		this.gameData = gameData;
+		screenRect = InitialScreenRect;
+	}
 
 	// インターフェースの実装
 	public string WindowTitle => WindowId.ToString();
