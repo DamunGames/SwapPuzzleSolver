@@ -14,6 +14,9 @@ public static class Define
 	public const int GridSizeMax = 10;
 	public const float BoardAreaMargin = 150.0f;
 
+	// Pallet
+	public const float PenMarkSizeScale = 0.5f;
+
 	// PanelColor
 	public const int InvalidPanelColorId = -1;
 	public const int EmptyPanelColorId = 0;

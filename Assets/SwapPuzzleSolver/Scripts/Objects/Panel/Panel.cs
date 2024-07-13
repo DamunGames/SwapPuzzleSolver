@@ -9,6 +9,7 @@ using TMPro;
 public class Panel : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler
 {
 	[SerializeField] RectTransform rectTransform;
+	public RectTransform RectTransform { get { return rectTransform; } }
 	[SerializeField] Image image;
 	[SerializeField] TextMeshProUGUI textMeshProUGUI;
 
@@ -30,7 +31,6 @@ public class Panel : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler
 	// イベント関数
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		Debug.Log("OnPointerEnter");
 		if (eventData.eligibleForClick) {
 			pointerDownOrDragEnterAction?.Invoke(this);
 		}
@@ -38,7 +38,6 @@ public class Panel : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		Debug.Log("OnPointerDown");
 		pointerDownOrDragEnterAction?.Invoke(this);
 	}
 

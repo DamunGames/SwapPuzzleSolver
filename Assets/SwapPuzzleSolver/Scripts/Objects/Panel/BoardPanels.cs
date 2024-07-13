@@ -6,6 +6,7 @@ using UnityEngine;
 public class BoardPanels
 {
 	GameData gameData;
+	BoardData showPanelData;
 	List<Panel> panels = new List<Panel>();
 
 	public BoardPanels(GameData gameData) => this.gameData = gameData;
@@ -19,22 +20,42 @@ public class BoardPanels
 			}
 		}
 
-		float panelSize = GetPanelSize(boardData);
+		showPanelData = boardData;
+
+		float panelSize = GetPanelSize(showPanelData);
 		Vector2 sizeDelta = new Vector2(panelSize, panelSize);
 
 		panels = new List<Panel>();
-		for (int y = 0; y < boardData.Size.Height; y++) {
-			for (int x = 0; x < boardData.Size.Width; x++) {
+		for (int y = 0; y < showPanelData.Size.Height; y++) {
+			for (int x = 0; x < showPanelData.Size.Width; x++) {
 				GameObject gameObject = GameObject.Instantiate(gameData.ResrouceObjects.PanelPrefab, gameData.HierarchyObjects.BoardPanelParent);
 				Panel panel = gameObject.GetComponent<Panel>();
 				panel.Point = new Point(x, y);
-				panel.SetSizeDelta(sizeDelta);
-				panel.SetLocalPosition(GetLocalPosition(x, y, panelSize));
 				panel.SetAction(isEditable ? PointerDownOrDragEnterAction : null);
 
 				panels.Add(panel);
 
-				SetPanelDispItems(boardData, panel);
+				SetPanelDispItems(showPanelData, panel);
+			}
+		}
+
+		Resize();
+	}
+
+	// 表示サイズ更新
+	public void Resize()
+	{
+		// エリア
+		float boardAreaSize = GetBoardAreaSize();
+		gameData.HierarchyObjects.BoardAreaRectTransform.sizeDelta = new Vector2(boardAreaSize, boardAreaSize);
+
+		// パネル
+		float panelSize = GetPanelSize(showPanelData);
+		Vector2 sizeDelta = new Vector2(panelSize, panelSize);
+		if (panels != null) {
+			foreach (var panel in panels) {
+				panel.SetSizeDelta(sizeDelta);
+				panel.SetLocalPosition(GetLocalPosition(panel.Point.X, panel.Point.Y, panelSize));
 			}
 		}
 	}
@@ -63,12 +84,7 @@ public class BoardPanels
 	// 入力Action
 	void PointerDownOrDragEnterAction(Panel panel)
 	{
-		int panelColorId = gameData.EditingBoardData.GetPanelColorId(panel.Point.X, panel.Point.Y);
-
-		panelColorId++;
-		if (panelColorId > Define.PanelColorIdMax) panelColorId = Define.EmptyPanelColorId;
-		gameData.EditingBoardData.SetPanelColorId(panel.Point, panelColorId);
-
+		gameData.EditingBoardData.SetPanelColorId(panel.Point, gameData.PenColorId);
 		SetPanelDispItems(gameData.EditingBoardData, panel);
 	}
 }

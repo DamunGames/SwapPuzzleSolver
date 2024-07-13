@@ -19,20 +19,28 @@ public class Scene : MonoBehaviour
 
 		gameData.Load();
 
+		gameData.ScreenSize = new Size(Screen.width, Screen.height);
+
 		gameData.IsEditable = true;
 		gameData.EditingBoardData = new BoardData();
 
 		gameData.BoardPanels = new BoardPanels(gameData);
 		gameData.BoardPanels.Show(gameData.EditingBoardData, true);
 
+		gameData.PalletPanels = new PalletPanels(gameData);
+		gameData.PalletPanels.Initialize();
+
 		gameData.BoardDataGUIWindow = new BoardDataGUIWindow(gameData);
 		RegisterWindow(gameData.BoardDataGUIWindow);
+
+		UpdateScreenSize();
 	}
 
 	void Update()
 	{
-		float boardAreaSize = gameData.BoardPanels.GetBoardAreaSize();
-		gameData.HierarchyObjects.BoardAreaRectTransform.sizeDelta = new Vector2(boardAreaSize, boardAreaSize);
+		if (gameData.ScreenSize.Width != Screen.width || gameData.ScreenSize.Height != Screen.height) {
+			UpdateScreenSize();
+		}
 	}
 
 	void OnGUI()
@@ -56,5 +64,15 @@ public class Scene : MonoBehaviour
 			openableWindows.Add(guiWindow);
 		}
 		guiWindows.Add(guiWindow);
+	}
+
+	void UpdateScreenSize()
+	{
+		gameData.ScreenSize.Width = Screen.width;
+		gameData.ScreenSize.Height = Screen.height;
+
+		gameData.BoardPanels.Resize();
+
+		gameData.PalletPanels.Resize();
 	}
 }

@@ -9,10 +9,14 @@ public class GameData
 
 	public SaveData SaveData;
 
+	public Size ScreenSize;
+
 	public bool IsEditable;
+	public int PenColorId;
 	public BoardData EditingBoardData;
 
 	public BoardPanels BoardPanels;
+	public PalletPanels PalletPanels;
 
 	public BoardDataGUIWindow BoardDataGUIWindow;
 
