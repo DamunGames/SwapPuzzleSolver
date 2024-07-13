@@ -12,6 +12,13 @@ public static class Define
 
 	// BoardData
 	public const int GridSizeMax = 10;
+	public const float BoardAreaMargin = 150.0f;
+
+	// PanelColor
+	public const int InvalidPanelColorId = -1;
+	public const int EmptyPanelColorId = 0;
+	public const int BlockPanelColorId = 1;
+	public const int PanelColorIdMax = 8;
 
 	// GUIWindow
 	public const float GUIWindowStartY = 300.0f;

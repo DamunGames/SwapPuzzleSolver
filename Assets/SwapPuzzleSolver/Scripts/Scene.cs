@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Scene : MonoBehaviour
 {
+	[SerializeField] ResouceObjects resourceObjects;
+	[SerializeField] HierarchyObjects hierarchyObjects;
+
 	GameData gameData = new GameData();
 
 	List<IGUIWindow> openableWindows = new List<IGUIWindow>();
@@ -11,7 +14,16 @@ public class Scene : MonoBehaviour
 
 	void Start()
 	{
+		gameData.ResrouceObjects = resourceObjects;
+		gameData.HierarchyObjects = hierarchyObjects;
+
 		gameData.Load();
+
+		gameData.IsEditable = true;
+		gameData.EditingBoardData = new BoardData();
+
+		gameData.BoardPanels = new BoardPanels(gameData);
+		gameData.BoardPanels.Show(gameData.EditingBoardData, true);
 
 		gameData.BoardDataGUIWindow = new BoardDataGUIWindow(gameData);
 		RegisterWindow(gameData.BoardDataGUIWindow);
@@ -19,7 +31,8 @@ public class Scene : MonoBehaviour
 
 	void Update()
 	{
-
+		float boardAreaSize = gameData.BoardPanels.GetBoardAreaSize();
+		gameData.HierarchyObjects.BoardAreaRectTransform.sizeDelta = new Vector2(boardAreaSize, boardAreaSize);
 	}
 
 	void OnGUI()

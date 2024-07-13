@@ -68,6 +68,7 @@ public class BoardDataGUIWindow : GUIWindowBase
 
 		if (GUILayout.Button("Load")) {
 			gameData.EditingBoardData = gameData.SaveData.BoardDatas[boardDataIdx].Clone();
+			gameData.BoardPanels.Show(gameData.EditingBoardData, true);
 		}
 
 		if (GUILayout.Button("Save")) {
@@ -98,6 +99,7 @@ public class BoardDataGUIWindow : GUIWindowBase
 
 		if (GUILayout.Button("Create")) {
 			gameData.EditingBoardData = new BoardData(creatingBoardSize.Width + 1, creatingBoardSize.Height + 1);
+			gameData.BoardPanels.Show(gameData.EditingBoardData, true);
 			stateType = StateType.WithSaveData;
 		}
 	}

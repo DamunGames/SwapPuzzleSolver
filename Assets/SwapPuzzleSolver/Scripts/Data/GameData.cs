@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class GameData
 {
+	public ResouceObjects ResrouceObjects;
+	public HierarchyObjects HierarchyObjects;
+
 	public SaveData SaveData;
 
-	public BoardData EditingBoardData = new BoardData();
+	public bool IsEditable;
+	public BoardData EditingBoardData;
+
+	public BoardPanels BoardPanels;
 
 	public BoardDataGUIWindow BoardDataGUIWindow;
 
