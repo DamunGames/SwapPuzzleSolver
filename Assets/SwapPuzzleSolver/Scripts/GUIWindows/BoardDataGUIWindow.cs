@@ -17,6 +17,7 @@ public class BoardDataGUIWindow : GUIWindowBase
 
 	int boardDataIdx;
 	string[] dataIdxSelectionGridContents;
+	bool isImmidiateLoad = true;
 
 	Size creatingBoardSize;
 	string[] creatingBoardSizeSelectionGridContents;
@@ -38,6 +39,12 @@ public class BoardDataGUIWindow : GUIWindowBase
 	{
 		stateType = StateType.WithSaveData;
 		base.Open();
+	}
+
+	public void ShowSelectedBoardData()
+	{
+		gameData.EditingBoardData = gameData.SaveData.BoardDatas[boardDataIdx].Clone();
+		gameData.BoardPanels.Show(gameData.EditingBoardData, true);
 	}
 
 	protected override void WindowFunction(int windowId)
@@ -64,11 +71,16 @@ public class BoardDataGUIWindow : GUIWindowBase
 	void WithSaveDataWindowFunction()
 	{
 		GUILayout.Label($"BoardDataIdx:{boardDataIdx}");
+		int prevBoardDataIdx = boardDataIdx;
 		boardDataIdx = GUILayout.SelectionGrid(boardDataIdx, dataIdxSelectionGridContents, Define.SaveBoardDataNum / 2);
+		if (boardDataIdx != prevBoardDataIdx && isImmidiateLoad) {
+			ShowSelectedBoardData();
+		}
+
+		isImmidiateLoad = GUILayout.Toggle(isImmidiateLoad, "ImmidiateLoad");
 
 		if (GUILayout.Button("Load")) {
-			gameData.EditingBoardData = gameData.SaveData.BoardDatas[boardDataIdx].Clone();
-			gameData.BoardPanels.Show(gameData.EditingBoardData, true);
+			ShowSelectedBoardData();
 		}
 
 		if (GUILayout.Button("Save")) {

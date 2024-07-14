@@ -25,12 +25,12 @@ public class Scene : MonoBehaviour
 		gameData.EditingBoardData = new BoardData();
 
 		gameData.BoardPanels = new BoardPanels(gameData);
-		gameData.BoardPanels.Show(gameData.EditingBoardData, true);
 
 		gameData.PalletPanels = new PalletPanels(gameData);
 		gameData.PalletPanels.Initialize();
 
 		gameData.BoardDataGUIWindow = new BoardDataGUIWindow(gameData);
+		gameData.BoardDataGUIWindow.ShowSelectedBoardData();
 		RegisterWindow(gameData.BoardDataGUIWindow);
 
 		UpdateScreenSize();
