@@ -18,7 +18,7 @@ public class PuzzleSolveGUIWindow : GUIWindowBase
 	UnityAction windowFunction;
 
 	PuzzleSolver puzzleSolver;
-
+	string lastTrySolveResult;
 	int puzzleSolveTraceStepIdx;
 
 	public PuzzleSolveGUIWindow(GameData gameData) : base(gameData)
@@ -29,6 +29,7 @@ public class PuzzleSolveGUIWindow : GUIWindowBase
 	public override void Open()
 	{
 		SetState(StateType.Main);
+		lastTrySolveResult = "";
 		base.Open();
 	}
 
@@ -46,7 +47,7 @@ public class PuzzleSolveGUIWindow : GUIWindowBase
 			puzzleSolver.StartCalculateSolve();
 			SetState(StateType.Calculating);
 		}
-		GUILayout.Label("");
+		GUILayout.Label(lastTrySolveResult);
 		GUILayout.Label("");
 		GUILayout.Label("");
 	}
@@ -65,11 +66,13 @@ public class PuzzleSolveGUIWindow : GUIWindowBase
 
 		if (!puzzleSolver.IsRunning) {
 			if (puzzleSolver.IsSuccess) {
+				lastTrySolveResult = "Success";
 				puzzleSolveTraceStepIdx = 0;
 				ShowSolveStep();
 				SetState(StateType.TraceSolveOperations);
 			}
 			else {
+				lastTrySolveResult = "Failed";
 				SetState(StateType.Main);
 			}
 		}
@@ -89,7 +92,7 @@ public class PuzzleSolveGUIWindow : GUIWindowBase
 			ShowSolveStep();
 		}
 
-		GUILayout.Label($"{puzzleSolveTraceStepIdx}");
+		GUILayout.Label($"Solve step:{puzzleSolveTraceStepIdx}");
 
 		if (GUILayout.Button("<")) {
 			puzzleSolveTraceStepIdx--;
