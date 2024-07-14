@@ -28,5 +28,6 @@ public static class Define
 	public enum WindowIdType : int
 	{
 		BoardData,
+		PuzzleSolve,
 	}
 }

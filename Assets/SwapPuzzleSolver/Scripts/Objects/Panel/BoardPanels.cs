@@ -8,11 +8,12 @@ public class BoardPanels
 	GameData gameData;
 	BoardData showPanelData;
 	List<Panel> panels = new List<Panel>();
+	SwapOperation swapOperationArrow;
 
 	public BoardPanels(GameData gameData) => this.gameData = gameData;
 
 	// 盤面表示
-	public void Show(BoardData boardData, bool isEditable)
+	public void Show(BoardData boardData, bool isEditable, SwapOperation swapOperationArrow = null)
 	{
 		if (panels != null && panels.Count > 0) {
 			foreach (var item in panels) {
@@ -39,6 +40,8 @@ public class BoardPanels
 			}
 		}
 
+		this.swapOperationArrow = swapOperationArrow;
+
 		Resize();
 	}
 
@@ -57,6 +60,32 @@ public class BoardPanels
 				panel.SetSizeDelta(sizeDelta);
 				panel.SetLocalPosition(GetLocalPosition(panel.Point.X, panel.Point.Y, panelSize));
 			}
+		}
+
+		// 矢印
+		if (swapOperationArrow != null) {
+			gameData.HierarchyObjects.OperationArrowRectTransform.gameObject.SetActive(true);
+			gameData.HierarchyObjects.OperationArrowRectTransform.SetAsLastSibling();
+			gameData.HierarchyObjects.OperationArrowRectTransform.localPosition = GetLocalPosition(swapOperationArrow.Point.X, swapOperationArrow.Point.Y, panelSize);
+			switch (swapOperationArrow.Dir.ToDirType()) {
+				case Dir.DirType.Up:
+					gameData.HierarchyObjects.OperationArrowRectTransform.eulerAngles = new Vector3(0.0f, 0.0f, 180.0f);
+					break;
+				case Dir.DirType.Left:
+					gameData.HierarchyObjects.OperationArrowRectTransform.eulerAngles = new Vector3(0.0f, 0.0f, -90.0f);
+					break;
+				case Dir.DirType.Right:
+					gameData.HierarchyObjects.OperationArrowRectTransform.eulerAngles = new Vector3(0.0f, 0.0f, 90.0f);
+					break;
+				case Dir.DirType.None:
+				case Dir.DirType.Down:
+				default:
+					gameData.HierarchyObjects.OperationArrowRectTransform.eulerAngles = Vector3.zero;
+					break;
+			}
+		}
+		else {
+			gameData.HierarchyObjects.OperationArrowRectTransform.gameObject.SetActive(false);
 		}
 	}
 

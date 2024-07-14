@@ -8,6 +8,7 @@ public class HierarchyObjects : MonoBehaviour
 	// Board
 	public RectTransform BoardAreaRectTransform;
 	public Transform BoardPanelParent;
+	public RectTransform OperationArrowRectTransform;
 	// Pallet
 	public RectTransform PalletAreaRectTransform;
 	public Transform PalletPanelParent;

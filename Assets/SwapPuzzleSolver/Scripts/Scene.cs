@@ -9,8 +9,9 @@ public class Scene : MonoBehaviour
 
 	GameData gameData = new GameData();
 
-	List<IGUIWindow> openableWindows = new List<IGUIWindow>();
 	List<IGUIWindow> guiWindows = new List<IGUIWindow>();
+	string[] windowOpenButtonNames;
+	int currentGUIWindowIdx;
 
 	void Start()
 	{
@@ -30,8 +31,17 @@ public class Scene : MonoBehaviour
 		gameData.PalletPanels.Initialize();
 
 		gameData.BoardDataGUIWindow = new BoardDataGUIWindow(gameData);
-		gameData.BoardDataGUIWindow.ShowSelectedBoardData();
 		RegisterWindow(gameData.BoardDataGUIWindow);
+
+		gameData.PuzzleSolveGUIWindow = new PuzzleSolveGUIWindow(gameData);
+		RegisterWindow(gameData.PuzzleSolveGUIWindow);
+
+		windowOpenButtonNames = new string[guiWindows.Count];
+		for (int i = 0; i < guiWindows.Count; i++) {
+			windowOpenButtonNames[i] = guiWindows[i].WindowTitle;
+		}
+
+		guiWindows[currentGUIWindowIdx].Open();
 
 		UpdateScreenSize();
 	}
@@ -45,24 +55,19 @@ public class Scene : MonoBehaviour
 
 	void OnGUI()
 	{
-		// GUIWindow表示ボタン
-		foreach (var guiWindow in openableWindows) {
-			if (GUILayout.Button(guiWindow.WindowTitle)) {
-				guiWindow.Open();
-			}
+		// 択一でWindowを選ぶ
+		int prevWindowIdx = currentGUIWindowIdx;
+		currentGUIWindowIdx = GUILayout.SelectionGrid(currentGUIWindowIdx, windowOpenButtonNames, 1);
+		if (currentGUIWindowIdx != prevWindowIdx) {
+			guiWindows[prevWindowIdx].Close();
+			guiWindows[currentGUIWindowIdx].Open();
 		}
 
-		// GUIWindowの表示処理
-		foreach (var guiWindow in guiWindows) {
-			guiWindow.OnGUI();
-		}
+		guiWindows[currentGUIWindowIdx].OnGUI();
 	}
 
 	void RegisterWindow(IGUIWindow guiWindow, bool isOpenable = true)
 	{
-		if (isOpenable) {
-			openableWindows.Add(guiWindow);
-		}
 		guiWindows.Add(guiWindow);
 	}
 

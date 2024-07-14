@@ -5,7 +5,7 @@ using UnityEngine;
 public class BoardDataGUIWindow : GUIWindowBase
 {
 	protected override Define.WindowIdType WindowId => Define.WindowIdType.BoardData;
-	protected override Rect InitialScreenRect => new Rect(Vector2.zero, new Vector2(120.0f, 30.0f));
+	protected override Rect InitialScreenRect => new Rect(new Vector2(0.0f, 120.0f), new Vector2(120.0f, 30.0f));
 
 	enum StateType
 	{
@@ -38,6 +38,7 @@ public class BoardDataGUIWindow : GUIWindowBase
 	public override void Open()
 	{
 		stateType = StateType.WithSaveData;
+		ShowSelectedBoardData();
 		base.Open();
 	}
 
@@ -49,10 +50,6 @@ public class BoardDataGUIWindow : GUIWindowBase
 
 	protected override void WindowFunction(int windowId)
 	{
-		if (GUILayout.Button("Close")) {
-			Close();
-		}
-
 		switch (stateType) {
 			case StateType.WithSaveData:
 				WithSaveDataWindowFunction();

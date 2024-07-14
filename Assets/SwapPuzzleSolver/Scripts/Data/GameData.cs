@@ -19,6 +19,7 @@ public class GameData
 	public PalletPanels PalletPanels;
 
 	public BoardDataGUIWindow BoardDataGUIWindow;
+	public PuzzleSolveGUIWindow PuzzleSolveGUIWindow;
 
 	public void Save()
 	{
